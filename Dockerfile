@@ -1,18 +1,12 @@
-# Using official python runtime base image
 FROM python:2.7-alpine
+MAINTAINER Antonis Kalipetis <akalipetis@gmail.com>
 
-# Set the application directory
-WORKDIR /app
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# Install our requirements.txt
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+COPY requirements.txt /usr/src/app/
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy our code from the current folder to /app inside the container
-ADD . /app
+COPY . /usr/src/app
 
-# Make port 80 available for links and/or publish
-EXPOSE 80
-
-# Define our command to be run when launching the container
 CMD ["python", "app.py"]
